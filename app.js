@@ -7,6 +7,8 @@ const models = require('./models');
 
 const PagoController = require('./controllers').PagoController;
 
+const ReciboController = require('./controllers').ReciboController;
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -38,6 +40,18 @@ app.post('/payments/create', function (req, res) {
 app.put('/payments/:userId', function (req, res) {
     PagoController.update(req.params.userId, req.body.newAmount).then(pago => {
         res.send({ message: 'Pago Editado' })
+    })
+})
+
+app.post('/payments/voucher/create', function (req, res) {
+    ReciboController.create(req.body.userId, req.body.code, req.body.amount).then(recibo => {
+        res.send({ message: 'Recibo creado' })
+    })
+})
+
+app.get('/payments/voucher/:userId', function (req, res) {
+    ReciboController.read(req.params.userId).then(recibos => {
+        res.send(recibos)
     })
 })
 
