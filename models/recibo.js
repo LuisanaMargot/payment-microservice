@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     codigo: DataTypes.STRING,
-    monto: DataTypes.FLOAT
+    monto: DataTypes.FLOAT,
+    estatus: DataTypes.ENUM('aprobado', 'pendiente'),
   }, {});
   Recibo.associate = function(models) {
       Recibo.belongsTo(models.Pago, { foreignKey: 'idPago', targetKey: 'id'})
