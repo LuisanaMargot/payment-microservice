@@ -7,10 +7,17 @@ module.exports = {
 
         return new Promise((resolve, reject) => {
             Pago.findOne({ where: { idUsuario: userId } }).then(pago => {
-                Recibo.create({codigo, monto}).then(recibo => {
+                Recibo.create({ codigo, monto, estatus: 'aprobado'}).then(recibo => {
                     recibo.setPago(pago).then(() => {
                         resolve(pago.get());
                         console.log(pago)
+                    })
+                    let totalCredit = Number.parseFloat(pago.saldo) + Number.parseFloat(monto)
+
+                    pago.saldo = totalCredit
+
+                    pago.save({ fields: ['saldo'] }).then((pagoUpdated) => {
+                        console.log(pagoUpdated.get({ plain: true }))
                     })
                 })
             })

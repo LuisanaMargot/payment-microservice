@@ -17,6 +17,9 @@ module.exports = {
       monto: {
         type: Sequelize.FLOAT
       },
+      estatus: {
+          type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
